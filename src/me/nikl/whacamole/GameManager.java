@@ -18,9 +18,9 @@ import java.util.*;
 import java.util.logging.Level;
 
 /**
- * Created by Niklas on 14.04.2017.
+ * Created by Niklas.
  *
- * 2048s GameManager
+ * Whac A Mole GameManager
  */
 
 public class GameManager implements IGameManager {
@@ -87,11 +87,13 @@ public class GameManager implements IGameManager {
         return GameBox.GAME_STARTED;
     }
 
+
     @Override
     public void removeFromGame(UUID uuid) {
-        games.get(uuid).onGameEnd();
+        // Todo: handle stop of running game
         games.remove(uuid);
     }
+
 
     public void setGameTypes(Map<String, GameRules> gameTypes) {
         this.gameTypes = gameTypes;
@@ -102,18 +104,14 @@ public class GameManager implements IGameManager {
         if (plugin.isEconEnabled() && !player[0].hasPermission(Permissions.BYPASS_ALL.getPermission()) && !player[0].hasPermission(Permissions.BYPASS_GAME.getPermission(Main.gameID)) && cost > 0.0) {
             if (Main.econ.getBalance(player[0]) >= cost) {
                 Main.econ.withdrawPlayer(player[0], cost);
-                player[0].sendMessage(chatColor(lang.PREFIX + plugin.lang.GAME_PAYED.replaceAll("%cost%", String.valueOf(cost))));
+                player[0].sendMessage(GameBox.chatColor(lang.PREFIX + plugin.lang.GAME_PAYED.replaceAll("%cost%", String.valueOf(cost))));
                 return true;
             } else {
-                player[0].sendMessage(chatColor(lang.PREFIX + plugin.lang.GAME_NOT_ENOUGH_MONEY));
+                player[0].sendMessage(GameBox.chatColor(lang.PREFIX + plugin.lang.GAME_NOT_ENOUGH_MONEY));
                 return false;
             }
         } else {
             return true;
         }
-    }
-
-    public Statistics getStatistics() {
-        return statistics;
     }
 }
