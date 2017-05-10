@@ -1,5 +1,6 @@
 package me.nikl.whacamole;
 
+import me.nikl.gamebox.Sounds;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
