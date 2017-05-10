@@ -180,14 +180,14 @@ public class Main extends JavaPlugin{
                 ItemMeta meta = button.getItemMeta();
 
                 if (buttonSec.isString("displayName")) {
-                    displayName = chatColor(buttonSec.getString("displayName"));
+                    displayName = GameBox.chatColor(buttonSec.getString("displayName"));
                     meta.setDisplayName(displayName);
                 }
 
                 if (buttonSec.isList("lore")) {
                     lore = new ArrayList<>(buttonSec.getStringList("lore"));
                     for (int i = 0; i < lore.size(); i++) {
-                        lore.set(i, chatColor(lore.get(i)));
+                        lore.set(i, GameBox.chatColor(lore.get(i)));
                     }
                     meta.setLore(lore);
                 }
@@ -242,16 +242,16 @@ public class Main extends JavaPlugin{
                 gameButton = (new ItemStack(Material.STAINED_CLAY));
             }
             ItemMeta meta = gameButton.getItemMeta();
-            meta.setDisplayName(chatColor(mainButtonSec.getString("displayName", lang.NAME)));
+            meta.setDisplayName(GameBox.chatColor(mainButtonSec.getString("displayName", lang.NAME)));
             if (mainButtonSec.isList("lore")) {
                 ArrayList<String> lore = new ArrayList<>(mainButtonSec.getStringList("lore"));
                 for (int i = 0; i < lore.size(); i++) {
-                    lore.set(i, chatColor(lore.get(i)));
+                    lore.set(i, GameBox.chatColor(lore.get(i)));
                 }
                 meta.setLore(lore);
             }
             gameButton.setItemMeta(meta);
-            guiManager.registerGameGUI(gameID, "main", gameGui, gameButton, this.subCommands);
+            guiManager.registerGameGUI(gameID, GUIManager.MAIN_GAME_GUI, gameGui, gameButton, this.subCommands);
         } else {
             Bukkit.getLogger().log(Level.WARNING, " Missing or wrong configured main button in the configuration file!");
         }
@@ -297,14 +297,14 @@ public class Main extends JavaPlugin{
                 ItemMeta meta = button.getItemMeta();
 
                 if (buttonSec.isString("displayName")) {
-                    meta.setDisplayName(chatColor(buttonSec.getString("displayName")));
+                    meta.setDisplayName(GameBox.chatColor(buttonSec.getString("displayName")));
                 }
 
 
                 if (buttonSec.isList("lore")) {
                     lore = new ArrayList<>(buttonSec.getStringList("lore"));
                     for (int i = 0; i < lore.size(); i++) {
-                        lore.set(i, chatColor(lore.get(i)));
+                        lore.set(i, GameBox.chatColor(lore.get(i)));
                     }
                     meta.setLore(lore);
                 }
@@ -331,21 +331,17 @@ public class Main extends JavaPlugin{
                 if (buttonSec.isList("skullLore")) {
                     lore = new ArrayList<>(buttonSec.getStringList("skullLore"));
                     for (int i = 0; i < lore.size(); i++) {
-                        lore.set(i, chatColor(lore.get(i)));
+                        lore.set(i, GameBox.chatColor(lore.get(i)));
                     }
                 } else {
                     lore = new ArrayList<>(Arrays.asList("", "No lore specified in the config!"));
                 }
 
-                TopListPage topListPage = new TopListPage(gameBox, guiManager, 54, gameID, buttonID + GUIManager.TOP_LIST_KEY_ADDON, buttonSec.isString("inventoryTitle") ? ChatColor.translateAlternateColorCodes('&', buttonSec.getString("inventoryTitle")) : "Title missing in config", this.topListSaveType, lore);
+                TopListPage topListPage = new TopListPage(gameBox, guiManager, 54, gameID, buttonID + GUIManager.TOP_LIST_KEY_ADDON, GameBox.chatColor(buttonSec.getString("inventoryTitle", "Title missing in config")), this.topListSaveType, lore);
 
                 guiManager.registerTopList(gameID, buttonID, topListPage);
             }
         }
-    }
-
-    private String chatColor(String message){
-        return ChatColor.translateAlternateColorCodes('&', message);
     }
 
     protected ItemStack getItemStack(String itemPath) {
