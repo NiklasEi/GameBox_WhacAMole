@@ -18,6 +18,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.map.MinecraftFont;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -92,7 +93,7 @@ public class Main extends JavaPlugin{
 
     private void hook() {
         if (Bukkit.getPluginManager().getPlugin("GameBox") == null || !Bukkit.getPluginManager().getPlugin("GameBox").isEnabled()) {
-            Bukkit.getLogger().log(Level.SEVERE, " GameBox not found");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes( '&', " &cGameBox not found!"));
             Bukkit.getLogger().log(Level.SEVERE, "   Get the newest version here:");
             Bukkit.getLogger().log(Level.SEVERE, "   https://www.spigotmc.org/resources/37273/");
             Bukkit.getPluginManager().disablePlugin(this);
@@ -121,8 +122,9 @@ public class Main extends JavaPlugin{
             if (minVersion[i] < version[i]) break;
             if (minVersion[i].equals(version[i])) continue;
 
-            Bukkit.getLogger().log(Level.WARNING, " Your GameBox is outdated!");
-            Bukkit.getLogger().log(Level.WARNING, " Get the latest version here: https://www.spigotmc.org/resources/37273/");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes( '&', " &cYour GameBox is outdated!"));
+            Bukkit.getLogger().log(Level.WARNING, " Get the latest version here: ");
+            Bukkit.getLogger().log(Level.WARNING, "   https://www.spigotmc.org/resources/37273/");
             Bukkit.getLogger().log(Level.WARNING, " You need at least version " + depends[1][1]);
             Bukkit.getPluginManager().disablePlugin(this);
             disabled = true;
