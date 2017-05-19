@@ -37,7 +37,7 @@ import java.util.logging.Level;
 public class Main extends JavaPlugin{
 
     public static boolean debug = false;
-    public static String gameID = "whac";
+    public static String gameID = "whacamole";
 
     public static Economy econ = null;
     private boolean econEnabled;
