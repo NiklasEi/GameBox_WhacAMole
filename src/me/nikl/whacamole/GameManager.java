@@ -5,16 +5,14 @@ import me.nikl.gamebox.Permissions;
 import me.nikl.gamebox.data.Statistics;
 import me.nikl.gamebox.game.IGameManager;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Level;
 
 /**
@@ -45,16 +43,21 @@ public class GameManager implements IGameManager {
 
     @Override
     public boolean onInventoryClick(InventoryClickEvent inventoryClickEvent) {
-        // ToDo
+        if(!games.keySet().contains(inventoryClickEvent.getWhoClicked().getUniqueId())) return false;
 
+        Game game = games.get(inventoryClickEvent.getWhoClicked().getUniqueId());
+
+        game.onClick(inventoryClickEvent);
         return true;
     }
 
 
     @Override
     public boolean onInventoryClose(InventoryCloseEvent inventoryCloseEvent) {
-        // ToDo
+        if(!games.keySet().contains(inventoryCloseEvent.getPlayer().getUniqueId())) return false;
 
+        // do same stuff as on removeFromGame()
+        removeFromGame(inventoryCloseEvent.getPlayer().getUniqueId());
         return true;
     }
 
@@ -90,7 +93,15 @@ public class GameManager implements IGameManager {
 
     @Override
     public void removeFromGame(UUID uuid) {
+
+        Game game = games.get(uuid);
+
+        if(game == null) return;
+
+        game.cancel();
+
         // Todo: handle stop of running game
+
         games.remove(uuid);
     }
 
