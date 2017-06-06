@@ -18,11 +18,14 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.map.MinecraftFont;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -77,6 +80,7 @@ public class Main extends JavaPlugin{
 
     @Override
     public void onDisable() {
+        GameBox.debug(lang.PREFIX + " Disabled...");
     }
 
     private boolean setupEconomy() {
@@ -103,6 +107,8 @@ public class Main extends JavaPlugin{
 
 
         gameBox = (GameBox) Bukkit.getPluginManager().getPlugin("GameBox");
+
+        GameBox.debug(lang.PREFIX + " Hooking in progress...");
 
         String[] versionString = gameBox.getDescription().getVersion().replaceAll("[^0-9.]", "").split("\\.");
         String[] minVersionString = depends[1][1].split("\\.");
@@ -141,7 +147,7 @@ public class Main extends JavaPlugin{
 
         this.gameManager = new GameManager(this);
 
-        gameBox.getPluginManager().registerGame(gameManager, gameID, lang.NAME, playerNum);
+        gameBox.getPluginManager().registerGame(this, gameManager, gameID, lang.NAME, playerNum);
 
         int gameGuiSlots = 54;
         GameGui gameGui = new GameGui(gameBox, guiManager, gameGuiSlots, gameID, "main");
