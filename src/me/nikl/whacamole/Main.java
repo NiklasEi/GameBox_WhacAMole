@@ -80,7 +80,7 @@ public class Main extends JavaPlugin{
 
     @Override
     public void onDisable() {
-        GameBox.debug(lang.PREFIX + " Disabled...");
+
     }
 
     private boolean setupEconomy() {
