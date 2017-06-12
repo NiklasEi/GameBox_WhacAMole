@@ -98,6 +98,7 @@ public class GameManager implements IGameManager {
 
         if(game == null) return;
 
+        game.onGameEnd();
         game.cancel();
 
         // Todo: handle stop of running game
