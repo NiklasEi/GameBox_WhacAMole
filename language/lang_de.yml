@@ -11,21 +11,26 @@ game:
     wonMoney: " &2Du hast &6%score%&2 Punkte erreicht und &6%reward%&2 gewonnen!"
   gameOverNoPay: " &2Du hast &6%score%&2 Punkte erreicht"
   inventoryTitles:
-    gameTitle: "&92048             &6Punkte: %score%"
-    lost: "&92048    &4Game Over  &6Punkte: %score%"
+    gameTitle: "&9WhacAMole       Punkte: %score%     &4%time%"
+    start: "&9WhacAMole       &c&lClick to start"
+    gameOver: "&9WhacAMole   &4Game Over    &9Score: %score%"
+  moleDisplayName: "&1&lMole"
+  creeperDisplayName: "&c&lCreeper"
+  humanDisplayName: "&a&lHuman"
 
 
-prefix: "[&32048&r]"
-name: "&12048&r"
+prefix: "[&3WhacAMole&r]"
+name: "&1WhacAMole&r"
+
 
 gameHelp:
-  - '&1&lVerschiebe die Kacheln in eine Richtung'
-  - '  &1&lmit Klicks auf die Pfeile.'
-  - '&1&lKacheln bewegen sich immer bis zum Rand des'
-  - '  &1&lSpielfelds, oder bis sie mit einer anderen'
-  - '  &1&lKachel kollidieren.'
-  - '&1&lKollidieren zwei Kacheln mit der selben'
-  - '  &1&lNummer, werden sie zu einer kombiniert.'
-  - '&1&lNach jedem Zug entsteht eine neue Kachel.'
-  - '&1&lVersuche so viele Punkte wie möglich zu'
-  - '  &1&lerreichen, bis kein Zug mehr machbar ist.'
+  - '&1&lClassic:'
+  - '  &1&lMaulwürfe tauchen in deinem Garten auf!'
+  - '  &1&lVerpasse ihnen einen,'
+  - '  &1&l  bevor sie wieder verschwinden.'
+  - ""
+  - '&1&lCreeper jagen Menschen:'
+  - '  &1&lAuf einem großen Feld jagen Creeper'
+  - '  &1&l  ein paar arme Menschen.'
+  - '&1&l  Schlage die Creeper, aber verschone'
+  - '&1&l    die Menschen!'
