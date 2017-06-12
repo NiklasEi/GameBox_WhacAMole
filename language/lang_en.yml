@@ -14,6 +14,9 @@ game:
     gameTitle: "&9WAM             Score: %score%  &4%time%"
     start: "&9WAM          &c&lClick to start"
     gameOver: "&9WAM    &4Game Over  &9Score: %score%"
+  moleDisplayName: "&1&lMole"
+  creeperDisplayName: "&c&lCreeper"
+  humanDisplayName: "&a&lHuman"
 
 
 
