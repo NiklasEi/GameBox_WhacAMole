@@ -24,11 +24,13 @@ gameBox:
       displayName: "&aClassic Whac A Mole"
       lore:
       - ""
-      - "&1Cost: &45"
-      - ""
       - "&6You have 4 molehills in your backyard."
       - "&6Hit them back in their holes"
       - "  &6when they show!"
+      - ""
+      - "&1Cost: &45"
+      - "&1Money rewards start at a score of &65"
+      - "&1You can win tokens above &620"
       slot: 20
       cost: 5
       # time in seconds the game runs for
@@ -38,6 +40,7 @@ gameBox:
       #                         "fullInventory" => moles can appear everywhere!
       # Visit the plugins page on Spigot for other modes I may add in the future:
       gameMode: "classic"
+      # here you can customize the players winnings
       scoreIntervals:
         0:
           money: 0
@@ -54,17 +57,17 @@ gameBox:
           tokens: 2
     saveStats:
       materialData: "159:3"
-      displayName: "&c&lCreepers chasing Humans"
+      displayName: "&6&lCreepers chasing Humans"
       lore:
       - ""
-      - "&cCreepers are chasing humans in"
-      - "  &chigh grass! Hit the creepers, but not"
+      - "&cCreepers are chasing humans on a huge"
+      - "  &cfield! Hit the creepers, but not"
       - "  &cthe poor humans!"
       - "&aGood luck!"
       - ""
       - "&1Cost: &450"
-      - "&1Money rewards start at a score of &6250"
-      - "&1You can win tokens above &61000"
+      - "&1Money rewards start at a score of &610"
+      - "&1You can win tokens above &620"
       slot: 24
       cost: 50
       # if true the best score of this button is saved
@@ -84,25 +87,26 @@ gameBox:
         0:
           money: 0
           tokens: 0
-        5:
-          money: 30
-        500:
-          money: 60
-        1000:
-          money: 100
+        10:
+          money: 25
+        15:
+          money: 50
+        20:
+          money: 75
           tokens: 1
-        2000:
-          money: 250
+        30:
+          money: 100
           tokens: 2
   topListButtons:
     # use the same key as the game you want to display the top list for
     #   for that button 'saveStats' must be true (see above)
     saveStats:
       materialData: "159:11"
-      displayName: "&cTop list"
+      displayName: "&6Creepers chasing Humans &c&lTop list"
       lore:
       - ""
-      - "&cCompetition &1Top List"
+      - "&6Click here to see the top list for the game:"
+      - "  &6&lCreepers chasing Humans"
       slot: 33
       # inventory title of the top list (%player% and %game%)
       inventoryTitle: '              Top List'
