@@ -11,8 +11,9 @@ game:
     wonMoney: " &2You reached a score of &6%score%&2 and won &6%reward%&2!"
   gameOverNoPay: " &2You reached a score of &6%score%"
   inventoryTitles:
-    gameTitle: "&9WAM             Score: %score%"
-    lost: "&9WAM    &4Game Over  &9Score: %score%"
+    gameTitle: "&9WAM             Score: %score%  &4%time%"
+    start: "&9WAM          &c&lClick to start"
+    gameOver: "&9WAM    &4Game Over  &9Score: %score%"
 
 
 
