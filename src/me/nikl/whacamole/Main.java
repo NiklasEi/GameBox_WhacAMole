@@ -162,6 +162,10 @@ public class Main extends JavaPlugin{
             double cost;
             boolean saveStats;
 
+            int time;
+
+            GameRules.GameMode gameMode;
+
             String displayName;
             ArrayList<String> lore;
 
@@ -213,11 +217,26 @@ public class Main extends JavaPlugin{
                 button.setArgs(gameID, buttonID);
 
 
+                gameMode = GameRules.GameMode.valueOf(buttonSec.getString("gameMode", "classic").toUpperCase());
+                if(gameMode == null) gameMode = GameRules.GameMode.CLASSIC;
+
+                time = buttonSec.getInt("time", 60);
+                if(time < 1) time = 60;
+
                 cost = buttonSec.getDouble("cost", 0.);
                 saveStats = buttonSec.getBoolean("saveStats", false);
 
 
-                rules = new GameRules(this, buttonID, cost, saveStats);
+                rules = new GameRules(this, gameMode, buttonID, cost, time,  saveStats);
+
+                // load gamemode specific rules
+                switch (gameMode){
+                    case FULLINVENTORY:
+                        rules.setGameOverOnHittingHuman(buttonSec.getBoolean("gameOverOnHittingHuman", false));
+                        rules.setPunishmentOnHittingHuman(buttonSec.getInt("punishmentOnHittingHuman", 5));
+                        break;
+                }
+
 
                 setTheButton:
                 if (buttonSec.isInt("slot")) {

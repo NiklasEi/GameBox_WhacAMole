@@ -20,10 +20,21 @@ public class GameRules {
     private Map<Integer, Double> moneyRewards;
     private Map<Integer, Integer> tokenRewards;
 
-    public GameRules(Main plugin, String key, double cost, boolean saveStats){
+    private int time;
+
+    private GameMode gameMode;
+
+    // gamemode full inventory rules
+    private boolean gameOverOnHittingHuman = false;
+    private int punishmentOnHittingHuman = 5;
+
+    public GameRules(Main plugin, GameMode gameMode, String key, double cost, int time, boolean saveStats){
         this.cost = cost;
         this.saveStats = saveStats;
         this.key = key;
+        this.time = time;
+
+        this.gameMode = gameMode;
 
         loadRewards(plugin);
     }
@@ -75,5 +86,33 @@ public class GameRules {
 
     public Map<Integer,Integer> getTokenRewards() {
         return tokenRewards;
+    }
+
+    public GameMode getGameMode() {
+        return gameMode;
+    }
+
+    public boolean isGameOverOnHittingHuman() {
+        return gameOverOnHittingHuman;
+    }
+
+    public void setGameOverOnHittingHuman(boolean gameOverOnHittingHuman) {
+        this.gameOverOnHittingHuman = gameOverOnHittingHuman;
+    }
+
+    public int getPunishmentOnHittingHuman() {
+        return punishmentOnHittingHuman;
+    }
+
+    public void setPunishmentOnHittingHuman(int punishmentOnHittingHuman) {
+        this.punishmentOnHittingHuman = punishmentOnHittingHuman;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public enum GameMode{
+        CLASSIC, FULLINVENTORY;
     }
 }
