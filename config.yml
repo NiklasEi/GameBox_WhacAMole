@@ -11,49 +11,55 @@ langFile: "default"
 gameBox:
   mainButton:
     # define the Material and data for the button (format: 'material:data')
-    materialData: "159:11"
+    materialData: "334"
     # display name of the button
-    displayName: "&32048"
+    displayName: "&3Whac A Mole"
     # lore of the button
     lore:
     - ""
-    - "&1Shift dem tiles and add 'em up"
+    - "&1Those Moles just keep coming back..."
   gameButtons:
     normal:
-      materialData: "WOOL:13"
-      displayName: "&a2048"
+      materialData: "IRON_BLOCK"
+      displayName: "&aClassic Whac A Mole"
       lore:
       - ""
       - "&1Cost: &45"
-      - "&1Money rewards start at a score of &6250"
-      - "&1You can win tokens above &61000"
+      - ""
+      - "&6You have 4 molehills in your backyard."
+      - "&6Hit them back in their holes"
+      - "  &6when they show!"
       slot: 20
       cost: 5
+      # time in seconds the game runs for
+      #   defaults to 60
+      time: 70
+      # possible gamemodes are: "classic" => four slots where moles can appear
+      #                         "fullInventory" => moles can appear everywhere!
+      # Visit the plugins page on Spigot for other modes I may add in the future:
+      gameMode: "classic"
       scoreIntervals:
-        # all keys have to be integers otherwise they will be ignored and a warning will be printed in the console
-
-        # money is only paid if economy is enabled
-        # tokens can be used in the GameBox shop
-
-        # You can add as many intervals as you want to. The order of the intervals doesn't matter
-        #   the given rewards will always be used if the game is finished with a score between the key and the
-        #   next higher key. For the highest key the interval goes to infinity
         0:
           money: 0
           tokens: 0
-        250:
+        5:
+          money: 2
+        10:
           money: 5
-        500:
+        20:
           money: 10
-        1000:
-          money: 20
           tokens: 1
+        30:
+          money: 20
+          tokens: 2
     saveStats:
       materialData: "159:3"
-      displayName: "&c&lCompetition"
+      displayName: "&c&lCreepers chasing Humans"
       lore:
       - ""
-      - "&cClimb up the &ltop list"
+      - "&cCreepers are chasing humans in"
+      - "  &chigh grass! Hit the creepers, but not"
+      - "  &cthe poor humans!"
       - "&aGood luck!"
       - ""
       - "&1Cost: &450"
@@ -63,11 +69,22 @@ gameBox:
       cost: 50
       # if true the best score of this button is saved
       saveStats: true
+      gameMode: "fullInventory"
+
+      # the following two options are only loaded for gamemode 'fullInventory'
+      #   they default to 'gameOverOnHittingHuman = false'
+      #                   'punishmentOnHittingHuman = 5'
+
+      # if true the game is lost when the player hits a human
+      gameOverOnHittingHuman: false
+      # if 'gameOverOnHittingHuman' is false, this is the amount of points players loose when they hit a human
+      punishmentOnHittingHuman: 5
+
       scoreIntervals:
         0:
           money: 0
           tokens: 0
-        250:
+        5:
           money: 30
         500:
           money: 60
@@ -99,18 +116,9 @@ gameBox:
 rules:
   # enable/disable sound
   playSounds: true
-  # if true there will be navigation buttons around the grid in the top inventory
-  #   additionally to the navigation in the bottom inventory
-  topNavigation: false
-  # if true the grid will be surrounded with black
-  surroundTheGrid:
-    enable: true
-    materialData: "160:15"
 
-buttons:
-  navigation:
-    materialData: "ARROW"
-    glow: false
+
+
 
 # requires vault and an economy plugin
 #   to enable economy do not forget to enable it for GameBox too
