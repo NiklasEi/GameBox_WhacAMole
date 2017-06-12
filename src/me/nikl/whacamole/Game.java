@@ -1,6 +1,9 @@
 package me.nikl.whacamole;
 
+import me.nikl.gamebox.GameBox;
+import me.nikl.gamebox.Permissions;
 import me.nikl.gamebox.Sounds;
+import me.nikl.gamebox.data.SaveType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -132,7 +135,7 @@ public class Game extends BukkitRunnable {
                 spawnLocations = new int[4];
                 int counter = 0;
                 for (int i = 0; i < inventory.getSize(); i++) {
-                    if(i == 11 || i == 29 || i == 13 || i == 31){
+                    if(i == 12 || i == 30 || i == 14 || i == 32){
                         spawnLocations[counter] = i;
                         counter++;
                     } else {
@@ -172,7 +175,6 @@ public class Game extends BukkitRunnable {
                     // human was hit
                     if(rule.isGameOverOnHittingHuman()){
                         onGameEnd();
-                        gameState = GameState.GAME_OVER;
                         if(playSounds)player.playSound(player.getLocation(), gameOver.bukkitSound(), volume, pitch);
                         plugin.getNms().updateInventoryTitle(player, lang.GAME_TITLE_LOST.replace("%score%", String.valueOf(score)).replace("%time%", String.valueOf(time)));
                     } else {
@@ -205,7 +207,6 @@ public class Game extends BukkitRunnable {
         decreaseTime = !decreaseTime;
         if(time < 1){
             onGameEnd();
-            this.gameState = GameState.GAME_OVER;
             if(playSounds)player.playSound(player.getLocation(), gameOver.bukkitSound(), volume, pitch);
             plugin.getNms().updateInventoryTitle(player, lang.GAME_TITLE_LOST.replace("%score%", String.valueOf(score)).replace("%time%", String.valueOf(time)));
             return;
@@ -247,6 +248,38 @@ public class Game extends BukkitRunnable {
     }
 
     public void onGameEnd() {
+        if(gameState == GameState.GAME_OVER) return;
 
+        int key = getKey();
+
+        double reward = key >= 0 ? rule.getMoneyRewards().get(key) : 0.;
+        int token = key >= 0 ? rule.getTokenRewards().get(key) : 0;
+
+        if(plugin.isEconEnabled() && reward > 0 && !player.hasPermission(Permissions.BYPASS_ALL.getPermission()) && !player.hasPermission(Permissions.BYPASS_GAME.getPermission(Main.gameID))){
+            Main.econ.depositPlayer(player, reward);
+            player.sendMessage(lang.PREFIX + lang.GAME_WON_MONEY.replace("%reward%", String.valueOf(reward)).replace("%score%", String.valueOf(score)));
+        } else {
+            player.sendMessage(lang.PREFIX + lang.GAME_WON.replace("%score%", String.valueOf(score)));
+        }
+        if(rule.isSaveStats()){
+            plugin.gameBox.getStatistics().addStatistics(player.getUniqueId(), Main.gameID, rule.getKey(), score, SaveType.SCORE);
+        }
+        if(token > 0){
+            plugin.gameBox.wonTokens(player.getUniqueId(), token, Main.gameID);
+        }
+
+        gameState = GameState.GAME_OVER;
+    }
+
+    private int getKey(){
+        int distance = -1;
+        for(int key : rule.getMoneyRewards().keySet()) {
+            if((score - key) >= 0 && (distance < 0 || distance > (score - key))){
+                distance = score - key;
+            }
+        }
+        if(distance > -1)
+            return score - distance;
+        return -1;
     }
 }
