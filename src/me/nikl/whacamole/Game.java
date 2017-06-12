@@ -39,7 +39,7 @@ public class Game extends BukkitRunnable {
 
     private int moleSlot = -99, humanSlot = -99;
 
-    private Sounds gameOver = Sounds.ANVIL_LAND;
+    private Sounds gameOver = Sounds.ANVIL_LAND, hitMole = Sounds.DONKEY_HIT, hitHuman = Sounds.VILLAGER_DEATH, hitCreeper = Sounds.CREEPER_DEATH;
 
     private float volume = 0.5f, pitch= 1f;
 
@@ -67,17 +67,32 @@ public class Game extends BukkitRunnable {
 
         this.time = rule.getTime();
 
-        mole = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.CREEPER.ordinal());
-        ItemMeta meta = mole.getItemMeta();
-        meta.setDisplayName("" + ChatColor.RED + ChatColor.BOLD + "Creeper");
-        mole.setItemMeta(meta);
+        ItemMeta meta;
+
+        switch (rule.getGameMode()){
+            case FULLINVENTORY:
+                mole = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.CREEPER.ordinal());
+                meta = mole.getItemMeta();
+                meta.setDisplayName(lang.GAME_CREEPER_NAME);
+                mole.setItemMeta(meta);
+                break;
+
+            case CLASSIC:
+            default:
+                mole = new ItemStack(Material.LEATHER, 1);
+                meta = mole.getItemMeta();
+                meta.setDisplayName(lang.GAME_MOLE_NAME);
+                mole.setItemMeta(meta);
+                break;
+        }
 
         human = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
         meta = human.getItemMeta();
-        meta.setDisplayName("" + ChatColor.GREEN + ChatColor.BOLD + "Human");
+        meta.setDisplayName(lang.GAME_HUMAN_NAME);
         human.setItemMeta(meta);
 
         grass = new MaterialData(Material.LONG_GRASS).toItemStack(1);
+        grass.setDurability((short) 1);
         meta = grass.getItemMeta();
         meta.setDisplayName(" ");
         grass.setItemMeta(meta);
@@ -150,17 +165,23 @@ public class Game extends BukkitRunnable {
                 if(inventoryClickEvent.getRawSlot() == moleSlot) {
                     score++;
                     inventory.setItem(moleSlot, grass);
+                    if(playSounds)player.playSound(player.getLocation(), hitCreeper.bukkitSound(), volume, pitch);
                     plugin.getNms().updateInventoryTitle(player, lang.GAME_TITLE.replace("%score%", String.valueOf(score)).replace("%time%", String.valueOf(time)));
                     moleSlot = -99;
                 } else {
                     // human was hit
                     if(rule.isGameOverOnHittingHuman()){
+                        onGameEnd();
                         gameState = GameState.GAME_OVER;
+                        if(playSounds)player.playSound(player.getLocation(), gameOver.bukkitSound(), volume, pitch);
                         plugin.getNms().updateInventoryTitle(player, lang.GAME_TITLE_LOST.replace("%score%", String.valueOf(score)).replace("%time%", String.valueOf(time)));
                     } else {
                         score = Math.max(score - rule.getPunishmentOnHittingHuman(), 0);
+                        if(playSounds)player.playSound(player.getLocation(), hitHuman.bukkitSound(), volume, pitch);
                         plugin.getNms().updateInventoryTitle(player, lang.GAME_TITLE.replace("%score%", String.valueOf(score)).replace("%time%", String.valueOf(time)));
                     }
+                    inventory.setItem(humanSlot, grass);
+                    humanSlot = -99;
                 }
 
                 return;
@@ -168,6 +189,7 @@ public class Game extends BukkitRunnable {
             case CLASSIC:
                 score++;
                 inventory.setItem(moleSlot, null);
+                if(playSounds)player.playSound(player.getLocation(), hitMole.bukkitSound(), volume, pitch);
                 plugin.getNms().updateInventoryTitle(player, lang.GAME_TITLE.replace("%score%", String.valueOf(score)).replace("%time%", String.valueOf(time)));
                 moleSlot = -99;
 
@@ -182,7 +204,9 @@ public class Game extends BukkitRunnable {
         if(decreaseTime) time --;
         decreaseTime = !decreaseTime;
         if(time < 1){
+            onGameEnd();
             this.gameState = GameState.GAME_OVER;
+            if(playSounds)player.playSound(player.getLocation(), gameOver.bukkitSound(), volume, pitch);
             plugin.getNms().updateInventoryTitle(player, lang.GAME_TITLE_LOST.replace("%score%", String.valueOf(score)).replace("%time%", String.valueOf(time)));
             return;
         }
@@ -190,12 +214,15 @@ public class Game extends BukkitRunnable {
 
 
         if (moleSlot < 0) {
-            if (random.nextDouble() > 0.5) {
+            if (random.nextDouble() < 0.25) {
                 moleSlot = spawnLocations[random.nextInt(spawnLocations.length)];
+                while (humanSlot == moleSlot) {
+                    moleSlot = spawnLocations[random.nextInt(spawnLocations.length)];
+                }
                 inventory.setItem(moleSlot, mole);
             }
         } else {
-            if (random.nextDouble() < 0.4) {
+            if (random.nextDouble() < 0.45) {
                 inventory.setItem(moleSlot, rule.getGameMode() == GameRules.GameMode.FULLINVENTORY? grass : null);
                 moleSlot = -99;
             }
@@ -211,11 +238,15 @@ public class Game extends BukkitRunnable {
                     inventory.setItem(humanSlot, human);
                 }
             } else {
-                if (random.nextDouble() < 0.7) {
+                if (random.nextDouble() < 0.3) {
                     inventory.setItem(humanSlot, rule.getGameMode() == GameRules.GameMode.FULLINVENTORY? grass : null);
                     humanSlot = -99;
                 }
             }
         }
+    }
+
+    public void onGameEnd() {
+
     }
 }
