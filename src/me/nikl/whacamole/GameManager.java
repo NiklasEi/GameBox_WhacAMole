@@ -27,8 +27,6 @@ public class GameManager implements IGameManager {
     private Map<UUID, Game> games = new HashMap<>();
     private Language lang;
 
-    private Statistics statistics;
-
     private Map<String,GameRules> gameTypes;
 
 
@@ -36,8 +34,6 @@ public class GameManager implements IGameManager {
     public GameManager(Main plugin){
         this.plugin = plugin;
         this.lang = plugin.lang;
-
-        this.statistics = plugin.gameBox.getStatistics();
     }
 
 
@@ -100,8 +96,6 @@ public class GameManager implements IGameManager {
 
         game.onGameEnd();
         game.cancel();
-
-        // Todo: handle stop of running game
 
         games.remove(uuid);
     }
