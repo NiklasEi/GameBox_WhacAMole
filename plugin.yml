@@ -1,6 +1,6 @@
 name: WhacAMole
 author: Nikl
 main: me.nikl.whacamole.Main
-version: 1.0.0-RC
+version: 1.0.0
 website: nikl.me
 depend: [GameBox]
