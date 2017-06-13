@@ -11,9 +11,9 @@ game:
     wonMoney: " &2You scored &6%score%&2 and won &6%reward%&2!"
   gameOverNoPay: " &2You reached a final score of &6%score%"
   inventoryTitles:
-    gameTitle: "&9WhacAMole        Score: %score%     &4%time%"
+    gameTitle: "&9WhacAMole      Score: %score%    &4%time%"
     start: "&9WhacAMole       &c&lClick to start"
-    gameOver: "&9WhacAMole   &4Game Over    &9Score: %score%"
+    gameOver: " &4Game Over         &9Score: %score%"
   moleDisplayName: "&1&lMole"
   creeperDisplayName: "&c&lCreeper"
   humanDisplayName: "&a&lHuman"

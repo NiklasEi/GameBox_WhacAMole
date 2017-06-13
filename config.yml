@@ -109,7 +109,7 @@ gameBox:
       - "  &6&lCreepers chasing Humans"
       slot: 33
       # inventory title of the top list (%player% and %game%)
-      inventoryTitle: '              Top List'
+      inventoryTitle: '     &6Creepers chasing Humans &rTop List'
       # Lore of the skulls in the inventory. Use %rank% for the rank and %score% for the highest score of the player
       skullLore:
       - ''
@@ -120,8 +120,6 @@ gameBox:
 rules:
   # enable/disable sound
   playSounds: true
-
-
 
 
 # requires vault and an economy plugin
