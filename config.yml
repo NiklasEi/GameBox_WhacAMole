@@ -116,6 +116,12 @@ gameBox:
       - '&6Rank:&1 %rank%'
       - '&6Score:&1 %score%'
 
+items:
+  creeper: "SKULL_ITEM:4"
+  human: "SKULL_ITEM:3"
+  mole: "LEATHER"
+  cover: "STAINED_GLASS_PANE"
+  grass: "LONG_GRASS"
 
 rules:
   # enable/disable sound
