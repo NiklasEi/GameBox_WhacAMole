@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
 
@@ -61,7 +62,7 @@ public class Game extends BukkitRunnable {
     private GameState gameState = GameState.START;
 
 
-    public Game(GameRules rule, Main plugin, Player player, boolean playSounds){
+    public Game(GameRules rule, Main plugin, Player player, boolean playSounds, Map<String, ItemStack> items){
         this.plugin = plugin;
         this.lang = plugin.lang;
         this.rule = rule;
@@ -74,7 +75,7 @@ public class Game extends BukkitRunnable {
 
         switch (rule.getGameMode()){
             case FULLINVENTORY:
-                mole = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.CREEPER.ordinal());
+                mole = items.get("creeper");
                 meta = mole.getItemMeta();
                 meta.setDisplayName(lang.GAME_CREEPER_NAME);
                 mole.setItemMeta(meta);
@@ -82,25 +83,25 @@ public class Game extends BukkitRunnable {
 
             case CLASSIC:
             default:
-                mole = new ItemStack(Material.LEATHER, 1);
+                mole = items.get("mole");
                 meta = mole.getItemMeta();
                 meta.setDisplayName(lang.GAME_MOLE_NAME);
                 mole.setItemMeta(meta);
                 break;
         }
 
-        human = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
+        human = items.get("human");
         meta = human.getItemMeta();
         meta.setDisplayName(lang.GAME_HUMAN_NAME);
         human.setItemMeta(meta);
 
-        grass = new MaterialData(Material.LONG_GRASS).toItemStack(1);
+        grass = items.get("grass");
         grass.setDurability((short) 1);
         meta = grass.getItemMeta();
         meta.setDisplayName(" ");
         grass.setItemMeta(meta);
 
-        cover = new MaterialData(Material.STAINED_GLASS_PANE).toItemStack(1);
+        cover = items.get("cover");
         meta = cover.getItemMeta();
         meta.setDisplayName(" ");
         cover.setItemMeta(meta);
