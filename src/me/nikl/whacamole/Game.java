@@ -1,19 +1,15 @@
 package me.nikl.whacamole;
 
-import me.nikl.gamebox.GameBox;
+import me.nikl.gamebox.GameBoxSettings;
 import me.nikl.gamebox.Permissions;
 import me.nikl.gamebox.Sounds;
 import me.nikl.gamebox.data.SaveType;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Map;
@@ -110,7 +106,11 @@ public class Game extends BukkitRunnable {
         this.playSounds = plugin.getPlaySounds() && playSounds;
 
         // create inventory
-        this.inventory = Bukkit.createInventory(null, 54, lang.GAME_TITLE_START.replace("%score%", String.valueOf(score)).replace("%time%", String.valueOf(time)));
+        String title = lang.GAME_TITLE_START.replace("%score%", String.valueOf(score)).replace("%time%", String.valueOf(time));
+        if(GameBoxSettings.checkInventoryLength && title.length() > 32){
+            title = "Title is too long!";
+        }
+        this.inventory = Bukkit.createInventory(null, 54, title);
 
         if(rule.getGameMode() == GameRules.GameMode.FULLINVENTORY) spawnHuman = true;
 
