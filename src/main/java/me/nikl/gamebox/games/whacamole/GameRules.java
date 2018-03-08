@@ -1,91 +1,49 @@
-package me.nikl.whacamole;
+package me.nikl.gamebox.games.whacamole;
 
-import org.bukkit.Bukkit;
+import me.nikl.gamebox.data.toplist.SaveType;
+import me.nikl.gamebox.game.rules.GameRuleMultiRewards;
 import org.bukkit.configuration.ConfigurationSection;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Niklas
  *
  * Game rules container for Whac a mole
  */
-public class GameRules {
-
-    private double cost;
-    private boolean saveStats;
-    private String key;
-
-    private Map<Integer, Double> moneyRewards;
-    private Map<Integer, Integer> tokenRewards;
-
+public class GameRules extends GameRuleMultiRewards {
     private int time;
-
     private GameMode gameMode;
-
-    // gamemode full inventory rules
     private boolean gameOverOnHittingHuman = false;
     private int punishmentOnHittingHuman = 5;
 
-    public GameRules(Main plugin, GameMode gameMode, String key, double cost, int time, boolean saveStats){
-        this.cost = cost;
-        this.saveStats = saveStats;
-        this.key = key;
+    public GameRules(WhacAMole plugin, GameMode gameMode, String key, double cost, int time, boolean saveStats) {
+        super(key, saveStats, SaveType.SCORE, cost);
         this.time = time;
-
         this.gameMode = gameMode;
-
         loadRewards(plugin);
     }
 
-
-    private void loadRewards(Main plugin) {
-        moneyRewards = new HashMap<>();
-        tokenRewards = new HashMap<>();
-
-        if(!plugin.getConfig().isConfigurationSection("gameBox.gameButtons." + key + ".scoreIntervals")) return;
-
+    private void loadRewards(WhacAMole plugin) {
+        if (!plugin.getConfig().isConfigurationSection("gameBox.gameButtons." + key + ".scoreIntervals")) return;
         ConfigurationSection onGameEnd = plugin.getConfig().getConfigurationSection("gameBox.gameButtons." + key + ".scoreIntervals");
         for (String key : onGameEnd.getKeys(false)) {
             int keyInt;
             try {
                 keyInt = Integer.parseInt(key);
             } catch (NumberFormatException e) {
-                Bukkit.getLogger().warning(plugin.lang.PREFIX + " NumberFormatException while getting the rewards from config!");
+                plugin.warn(" NumberFormatException while getting the rewards from config!");
                 continue;
             }
             if (onGameEnd.isSet(key + ".money") && (onGameEnd.isDouble(key + ".money") || onGameEnd.isInt(key + ".money"))) {
-                moneyRewards.put(keyInt, onGameEnd.getDouble(key + ".money"));
+                addMoneyReward(keyInt, onGameEnd.getDouble(key + ".money"));
             } else {
-                moneyRewards.put(keyInt, 0.);
+                addMoneyReward(keyInt, 0.);
             }
             if (onGameEnd.isSet(key + ".tokens") && (onGameEnd.isDouble(key + ".tokens") || onGameEnd.isInt(key + ".tokens"))) {
-                tokenRewards.put(keyInt, onGameEnd.getInt(key + ".tokens"));
+                addTokenReward(keyInt, onGameEnd.getInt(key + ".tokens"));
             } else {
-                tokenRewards.put(keyInt, 0);
+                addTokenReward(keyInt, 0);
             }
         }
-    }
-
-    public double getCost() {
-        return cost;
-    }
-
-    public boolean isSaveStats() {
-        return saveStats;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public Map<Integer,Double> getMoneyRewards() {
-        return moneyRewards;
-    }
-
-    public Map<Integer,Integer> getTokenRewards() {
-        return tokenRewards;
     }
 
     public GameMode getGameMode() {
@@ -112,7 +70,7 @@ public class GameRules {
         return time;
     }
 
-    public enum GameMode{
+    public enum GameMode {
         CLASSIC, FULLINVENTORY;
     }
 }
