@@ -208,20 +208,13 @@ public class Game extends BukkitRunnable {
 
     public void onGameEnd() {
         if (gameState == GameState.GAME_OVER) return;
+        gameState = GameState.GAME_OVER;
         double reward = rule.getMoneyToWin(score);
-        int token = rule.getTokenToWin(score);
         if (plugin.getSettings().isEconEnabled() && reward > 0 && !Permission.BYPASS_GAME.hasPermission(player, WhacAMolePlugin.WHAC_A_MOLE)) {
-            GameBox.econ.depositPlayer(player, reward);
             player.sendMessage(lang.PREFIX + lang.GAME_WON_MONEY.replace("%reward%", String.valueOf(reward)).replace("%score%", String.valueOf(score)));
         } else {
             player.sendMessage(lang.PREFIX + lang.GAME_WON.replace("%score%", String.valueOf(score)));
         }
-        if (rule.isSaveStats()) {
-            plugin.getGameBox().getDataBase().addStatistics(player.getUniqueId(), WhacAMolePlugin.WHAC_A_MOLE, rule.getKey(), score, SaveType.SCORE);
-        }
-        if (token > 0) {
-            plugin.getGameBox().wonTokens(player.getUniqueId(), token, WhacAMolePlugin.WHAC_A_MOLE);
-        }
-        gameState = GameState.GAME_OVER;
+        plugin.onGameWon(player, rule, score);
     }
 }
