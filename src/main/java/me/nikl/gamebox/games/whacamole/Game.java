@@ -1,7 +1,5 @@
 package me.nikl.gamebox.games.whacamole;
 
-import me.nikl.gamebox.GameBox;
-import me.nikl.gamebox.data.toplist.SaveType;
 import me.nikl.gamebox.games.WhacAMolePlugin;
 import me.nikl.gamebox.nms.NmsFactory;
 import me.nikl.gamebox.utility.Permission;
@@ -10,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -70,8 +69,10 @@ public class Game extends BukkitRunnable {
         human.setItemMeta(meta);
 
         grass = items.get("grass");
-        grass.setDurability((short) 1);
         meta = grass.getItemMeta();
+        if (meta instanceof Damageable) {
+            ((Damageable) meta).setDamage(1);
+        }
         meta.setDisplayName(" ");
         grass.setItemMeta(meta);
 
