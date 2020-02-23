@@ -47,12 +47,12 @@ public class GameManager extends EasyManager {
         items.put("human", item);
         item = ItemStackUtility.getItemStack(whacAMole.getConfig().getString("items.mole", "LEATHER"));
         if (item == null) {
-            item = new ItemStack(Material.LEATHER, 1);
+            item = new ItemStack(Material.RABBIT_HIDE, 1);
         }
         items.put("mole", item);
         item = ItemStackUtility.getItemStack(whacAMole.getConfig().getString("items.cover", "LIGHT_GRAY_STAINED_GLASS_PANE"));
         if (item == null) {
-            item = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE);
+            item = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
         }
         items.put("cover", item);
         item = ItemStackUtility.getItemStack(whacAMole.getConfig().getString("items.grass", "TALL_GRASS"));

@@ -11,7 +11,7 @@ langFile: "default"
 gameBox:
   mainButton:
     # define the Material and data for the button (format: 'material:data')
-    materialData: "leather"
+    materialData: "RABBIT_HIDE"
     # display name of the button
     displayName: "&3Whac A Mole"
     # lore of the button
@@ -20,7 +20,7 @@ gameBox:
     - "&1Those Moles just keep coming back..."
   gameButtons:
     normal:
-      materialData: "IRON_BLOCK"
+      materialData: "RABBIT_HIDE"
       displayName: "&a&lClassic Whac A Mole"
       lore:
       - ""
@@ -56,7 +56,7 @@ gameBox:
           money: 20
           tokens: 2
     saveStats:
-      materialData: "LIGHT_BLUE_CONCRETE"
+      materialData: "CREEPER_HEAD"
       displayName: "&a&lCreepers chasing Humans"
       lore:
       - ""
@@ -101,7 +101,7 @@ gameBox:
     # use the same key as the game you want to display the top list for
     #   for that button 'saveStats' must be true (see above)
     saveStats:
-      materialData: "BLUE_CONCRETE"
+      materialData: "PLAYER_HEAD"
       displayName: "&a&lTop list"
       lore:
       - ""
@@ -118,8 +118,8 @@ gameBox:
 items:
   creeper: "CREEPER_HEAD"
   human: "PLAYER_HEAD"
-  mole: "LEATHER"
-  cover: "LIGHT_GRAY_STAINED_GLASS_PANE"
+  mole: "RABBIT_HIDE"
+  cover: "GRAY_STAINED_GLASS_PANE"
   grass: "TALL_GRASS"
 
 rules:
