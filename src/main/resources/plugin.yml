@@ -1,6 +1,0 @@
-name: WhacAMole
-author: Nikl
-main: me.nikl.gamebox.games.WhacAMolePlugin
-version: 2.1.0
-website: nikl.me
-depend: [GameBox]

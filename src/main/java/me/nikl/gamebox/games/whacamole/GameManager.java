@@ -5,13 +5,11 @@ import me.nikl.gamebox.game.manager.EasyManager;
 import me.nikl.gamebox.game.rules.GameRule;
 import me.nikl.gamebox.utility.ItemStackUtility;
 import org.bukkit.Material;
-import org.bukkit.SkullType;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -37,29 +35,29 @@ public class GameManager extends EasyManager {
     }
 
     private void loadItems() {
-        ItemStack item = ItemStackUtility.getItemStack(whacAMole.getConfig().getString("items.creeper", "SKULL_ITEM:4"));
+        ItemStack item = ItemStackUtility.getItemStack(whacAMole.getConfig().getString("items.creeper", "CREEPER_HEAD"));
         if (item == null) {
-            item = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.CREEPER.ordinal());
+            item = new ItemStack(Material.CREEPER_HEAD, 1);
         }
         items.put("creeper", item);
-        item = ItemStackUtility.getItemStack(whacAMole.getConfig().getString("items.human", "SKULL_ITEM:3"));
+        item = ItemStackUtility.getItemStack(whacAMole.getConfig().getString("items.human", "PLAYER_HEAD"));
         if (item == null) {
-            item = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
+            item = new ItemStack(Material.PLAYER_HEAD, 1);
         }
         items.put("human", item);
         item = ItemStackUtility.getItemStack(whacAMole.getConfig().getString("items.mole", "LEATHER"));
         if (item == null) {
-            item = new ItemStack(Material.LEATHER, 1);
+            item = new ItemStack(Material.RABBIT_HIDE, 1);
         }
         items.put("mole", item);
-        item = ItemStackUtility.getItemStack(whacAMole.getConfig().getString("items.cover", "STAINED_GLASS_PANE"));
+        item = ItemStackUtility.getItemStack(whacAMole.getConfig().getString("items.cover", "LIGHT_GRAY_STAINED_GLASS_PANE"));
         if (item == null) {
-            item = new MaterialData(Material.STAINED_GLASS_PANE).toItemStack(1);
+            item = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
         }
         items.put("cover", item);
-        item = ItemStackUtility.getItemStack(whacAMole.getConfig().getString("items.grass", "LONG_GRASS"));
+        item = ItemStackUtility.getItemStack(whacAMole.getConfig().getString("items.grass", "TALL_GRASS"));
         if (item == null) {
-            item = new MaterialData(Material.LONG_GRASS).toItemStack(1);
+            item = new ItemStack(Material.TALL_GRASS, 1);
         }
         items.put("grass", item);
     }
